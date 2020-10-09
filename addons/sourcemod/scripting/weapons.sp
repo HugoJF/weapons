@@ -130,6 +130,11 @@ public void OnPluginStart()
 #if defined DEBUG
 public Action Command_SetKnife(int client, int args)
 {
+	if (!CheckCommandAccess(client, "Knives", ADMFLAG_RESERVATION))
+	{
+		PrintToChat(client, "\x01[KNIVES] \x02Você precisa ser VIP para mudar as facas! \x01Accesse \x04https://vip.denerdtv.com");
+		return Plugin_Handled;
+	}
 	if(args != 2)
 	{
 		ReplyToCommand(client, "[SM] Usage: sm_setknife <playername> <weaponname>");
@@ -177,6 +182,11 @@ public Action Command_GetClientKnife(int client, int args)
 
 public Action CommandWeaponSkins(int client, int args)
 {
+	if (!CheckCommandAccess(client, "Skins", ADMFLAG_RESERVATION))
+	{
+		PrintToChat(client, "\x01[SKINS] \x02Você precisa ser VIP para mudar as skins! \x01Accesse \x04https://vip.denerdtv.com");
+		return Plugin_Handled;
+	}
 	if (IsValidClient(client))
 	{
 		int menuTime;
@@ -194,6 +204,11 @@ public Action CommandWeaponSkins(int client, int args)
 
 public Action CommandSeedMenu(int client, int args)
 {
+	if (!CheckCommandAccess(client, "Seeds", ADMFLAG_RESERVATION))
+	{
+		PrintToChat(client, "\x01[SEEDS] \x02Você precisa ser VIP para mudar as seeds! \x01Accesse \x04https://vip.denerdtv.com");
+		return Plugin_Handled;
+	}
 	if(!g_bEnableSeed)
 	{
 		ReplyToCommand(client, " %s \x02%T", g_ChatPrefix, "SeedDisabled", client);
@@ -205,6 +220,11 @@ public Action CommandSeedMenu(int client, int args)
 
 public Action CommandKnife(int client, int args)
 {
+	if (!CheckCommandAccess(client, "Knives", ADMFLAG_RESERVATION))
+	{
+		PrintToChat(client, "\x01[KNIVES] \x02Você precisa ser VIP para mudar as facas! \x01Accesse \x04https://vip.denerdtv.com");
+		return Plugin_Handled;
+	}
 	if (IsValidClient(client))
 	{
 		int menuTime;
@@ -239,6 +259,11 @@ public Action CommandWSLang(int client, int args)
 
 public Action CommandNameTag(int client, int args)
 {
+	if (!CheckCommandAccess(client, "Nametag", ADMFLAG_RESERVATION))
+	{
+		PrintToChat(client, "\x01[TAGS] \x02Você precisa ser VIP para mudar as tags! \x01Accesse \x04https://vip.denerdtv.com");
+		return Plugin_Handled;
+	}
 	if(!g_bEnableNameTag)
 	{
 		ReplyToCommand(client, " %s \x02%T", g_ChatPrefix, "NameTagDisabled", client);
@@ -250,6 +275,10 @@ public Action CommandNameTag(int client, int args)
 
 void SetWeaponProps(int client, int entity)
 {
+	if (!CheckCommandAccess(client, "Skins", ADMFLAG_RESERVATION))
+	{
+		return;
+	}
 	int index = GetWeaponIndex(entity);
 	if (index > -1 && g_iSkins[client][index] != 0)
 	{
@@ -296,6 +325,10 @@ void SetWeaponProps(int client, int entity)
 
 void RefreshWeapon(int client, int index, bool defaultKnife = false)
 {
+	if (!CheckCommandAccess(client, "Skins", ADMFLAG_RESERVATION))
+	{
+		return;
+	}
 	int size = GetEntPropArraySize(client, Prop_Send, "m_hMyWeapons");
 	
 	for (int i = 0; i < size; i++)
